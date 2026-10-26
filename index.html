@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090d16">
+  <title>CyberQuiz — Test Your Knowledge</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="glow glow-one"></div>
+  <div class="glow glow-two"></div>
+
+  <div class="app">
+    <header class="navbar">
+      <div class="logo">
+        <div class="logo-icon">⌘</div>
+        <div>CYBER<span>QUIZ</span></div>
+      </div>
+      <div class="nav-right">
+        <span class="online"><i></i> SYSTEM ONLINE</span>
+        <span class="version">V1.0</span>
+      </div>
+    </header>
+
+    <main>
+      <!-- HOME SCREEN -->
+      <section id="home-screen" class="screen">
+        <div class="hero">
+          <div class="hero-tag">✦ INTERACTIVE CYBERSECURITY TRAINING</div>
+          <h1>Test your <span>cyber</span><br>knowledge<span class="dot">.</span></h1>
+          <p>
+            Développe tes compétences en cybersécurité,
+            Linux et réseaux. Choisis ta spécialité,
+            relève le défi et améliore ton score.
+          </p>
+          <div class="hero-stats">
+            <div><strong>05</strong><small>CATÉGORIES</small></div>
+            <div><strong>03</strong><small>DIFFICULTÉS</small></div>
+            <div><strong>45</strong><small>QUESTIONS</small></div>
+          </div>
+        </div>
+
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">01 / CONFIGURATION</span>
+            <h2>Choisis ta spécialité</h2>
+          </div>
+          <p>Sélectionne un domaine pour commencer.</p>
+        </div>
+
+        <div class="categories" id="categories">
+          <button class="category selected" data-category="linux">
+            <span class="category-icon">⌘</span>
+            <strong>Linux</strong>
+            <small>Terminal, permissions, système</small>
+            <span class="category-arrow">↗</span>
+          </button>
+          <button class="category" data-category="network">
+            <span class="category-icon">◎</span>
+            <strong>Réseaux</strong>
+            <small>IP, routage, infrastructure</small>
+            <span class="category-arrow">↗</span>
+          </button>
+          <button class="category" data-category="protocol">
+            <span class="category-icon">⇄</span>
+            <strong>Protocoles</strong>
+            <small>HTTP, DNS, TLS, SSH</small>
+            <span class="category-arrow">↗</span>
+          </button>
+          <button class="category" data-category="password">
+            <span class="category-icon">◇</span>
+            <strong>Mots de passe</strong>
+            <small>Authentification et sécurité</small>
+            <span class="category-arrow">↗</span>
+          </button>
+          <button class="category" data-category="security">
+            <span class="category-icon">⬡</span>
+            <strong>Cybersécurité</strong>
+            <small>Menaces, défense, bonnes pratiques</small>
+            <span class="category-arrow">↗</span>
+          </button>
+        </div>
+
+        <div class="config-panel">
+          <div>
+            <span class="eyebrow">02 / DIFFICULTÉ</span>
+            <h3>Choisis ton niveau</h3>
+          </div>
+          <div class="difficulty-options">
+            <button class="difficulty selected" data-level="easy">
+              <span class="level-dot easy"></span> Débutant
+            </button>
+            <button class="difficulty" data-level="medium">
+              <span class="level-dot medium"></span> Intermédiaire
+            </button>
+            <button class="difficulty" data-level="hard">
+              <span class="level-dot hard"></span> Expert
+            </button>
+          </div>
+          <div class="config-bottom">
+            <span>3 questions par session · 20 sec / question</span>
+            <button id="start-btn" class="main-btn">Commencer le quiz <span>→</span></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- QUIZ SCREEN -->
+      <section id="quiz-screen" class="screen hidden">
+        <div class="quiz-top">
+          <button id="quit-btn" class="back-btn">← Quitter</button>
+          <span id="quiz-category-label" class="quiz-label">LINUX / DÉBUTANT</span>
+        </div>
+
+        <div class="quiz-layout">
+          <div class="quiz-main">
+            <div class="question-top">
+              <div>
+                <span class="eyebrow">CURRENT CHALLENGE</span>
+                <h2>Question <span id="question-number">01</span><span class="muted"> / <span id="total-questions">03</span></span></h2>
+              </div>
+              <div class="timer" id="timer">◷ <span id="time-left">20</span>s</div>
+            </div>
+
+            <div class="progress-track"><div id="progress-fill"></div></div>
+
+            <div class="question-card">
+              <span class="question-badge">QUESTION À CHOIX MULTIPLE</span>
+              <h3 id="question-text"></h3>
+              <p class="answer-hint">Sélectionne la bonne réponse parmi les quatre propositions.</p>
+              <div id="answers" class="answers"></div>
+              <div id="explanation" class="explanation hidden"></div>
+              <button id="next-btn" class="main-btn hidden">Question suivante <span>→</span></button>
+            </div>
+          </div>
+
+          <aside class="sidebar">
+            <div class="side-card">
+              <span class="eyebrow">SESSION STATS</span>
+              <div class="stat-row"><span>Score actuel</span><strong id="current-score">0</strong></div>
+              <div class="stat-row"><span>Bonnes réponses</span><strong id="correct-count">0</strong></div>
+              <div class="stat-row"><span>Meilleur score</span><strong id="best-score">0</strong></div>
+            </div>
+            <div class="side-card tip-card">
+              <span class="tip-icon">✧</span>
+              <strong>LE SAVIEZ-VOUS ?</strong>
+              <p>Chaque bonne réponse rapporte 100 points, avec un bonus de rapidité allant jusqu'à 20 points.</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- RESULT SCREEN -->
+      <section id="result-screen" class="screen hidden">
+        <div class="result-card">
+          <div class="result-icon" id="result-icon">★</div>
+          <span class="eyebrow">CHALLENGE COMPLETED</span>
+          <h2 id="result-title">Quiz terminé !</h2>
+          <p id="result-message"></p>
+          <div class="final-score">
+            <span>SCORE FINAL</span>
+            <strong id="final-score">0</strong>
+            <small>POINTS</small>
+          </div>
+          <div class="result-stats">
+            <div><strong id="result-correct">0/3</strong><span>RÉPONSES CORRECTES</span></div>
+            <div><strong id="result-percent">0%</strong><span>PRÉCISION</span></div>
+            <div><strong id="result-best">0</strong><span>MEILLEUR SCORE</span></div>
+          </div>
+          <div class="result-actions">
+            <button id="retry-btn" class="main-btn">↻ Rejouer</button>
+            <button id="home-btn" class="secondary-btn">Changer de catégorie</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>© 2026 CYBERQUIZ</span>
+      <span>LEARN · PRACTICE · LEVEL UP</span>
+    </footer>
+  </div>
+</body>
+</html>
